@@ -1,9 +1,11 @@
-import { useState } from "react";
 import { useRoutes } from "react-router-dom";
 
-// import "./App.css";
+import { AuthProvider } from "./contexts/authContext";
 
 import Login from "./components/auth/Login";
+import Home from "./components/Home";
+import Header from "./components/Header";
+import Register from "./components/auth/Register";
 
 type Route = {
   path: string;
@@ -11,7 +13,6 @@ type Route = {
 };
 
 function App() {
-
   const routesArray: Route[] = [
     {
       path: "*",
@@ -21,13 +22,21 @@ function App() {
       path: "/login",
       element: <Login />,
     },
+    { path: "/register", element: <Register /> },
+    {
+      path: "/home",
+      element: <Home />,
+    },
   ];
 
   let routesElement = useRoutes(routesArray);
 
   return (
     <>
-      <div>{routesElement}</div>
+      <AuthProvider>
+        <Header />
+        <div className="w-full h-screen flex flex-col">{routesElement}</div>
+      </AuthProvider>
     </>
   );
 }
