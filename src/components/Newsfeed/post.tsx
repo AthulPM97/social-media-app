@@ -1,4 +1,4 @@
-type Post = {
+export type PostType = {
   user_name: string;
   description: string;
   image_url: string;
@@ -6,7 +6,7 @@ type Post = {
   created_at: string;
 };
 
-const Post = ({ post }: { post: Post }) => {
+const Post = ({ post }: { post: PostType }) => {
   const { user_name, description, image_url, tagged_users, created_at } = post;
   return (
     <div className="border rounded-lg my-3">
