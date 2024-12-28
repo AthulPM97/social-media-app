@@ -1,6 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { auth } from "../../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import firebase from "firebase/compat/app";
+
+import supabase from "../../supabase/supabaseClient";
 
 interface AuthContextType {
   currentUser?: any;
@@ -18,6 +21,19 @@ export function useAuth() {
   return useContext(AuthContext);
 }
 
+const syncUserWithSupabase = async (user: firebase.User) => {
+  const { uid, email } = user;
+  const { data, error } = await supabase
+    .from("users")
+    .upsert([{ id: uid, email }], { onConflict: "id" });
+
+  if (error) {
+    console.error("Error syncing user with Supabase:", error);
+  } else {
+    console.log("User synced with Supabase:", data);
+  }
+};
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [userLoggedIn, setUserLoggedIn] = useState(false);
@@ -32,6 +48,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (user) {
       setCurrentUser({ ...user });
       setUserLoggedIn(true);
+      await syncUserWithSupabase(user);
     } else {
       setCurrentUser(null);
       setUserLoggedIn(false);
