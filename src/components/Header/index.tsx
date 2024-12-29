@@ -2,8 +2,17 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/authContext";
 import { doSignOut } from "../../firebase/auth";
 import instagram from "../../assets/instagram.png";
+import { useState } from "react";
+import Modal from "../Modal";
+import PostForm from "../PostForm";
+import SearchBox from "./Searchbox";
 
 const Header = () => {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleOpenModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
+
   const navigate = useNavigate();
   const { userLoggedIn } = useAuth();
   return (
@@ -12,6 +21,7 @@ const Header = () => {
         <div className="flex justify-between items-center h-16 px-2 max-w-5xl mx-auto">
           {userLoggedIn ? (
             <>
+              <SearchBox />
               <button
                 onClick={() => {
                   doSignOut().then(() => {
@@ -22,6 +32,16 @@ const Header = () => {
               >
                 Logout
               </button>
+              <button
+                className="px-4 py-2 bg-white text-blue-500 rounded"
+                onClick={handleOpenModal}
+              >
+                Create Post
+              </button>
+
+              <Modal show={showModal} onClose={handleCloseModal}>
+                <PostForm onClose={handleCloseModal} />
+              </Modal>
             </>
           ) : (
             <div className="w-28 h-full flex">

@@ -23,9 +23,12 @@ export function useAuth() {
 
 const syncUserWithSupabase = async (user: firebase.User) => {
   const { uid, email } = user;
+  // extract user_name from email
+  const userName = email?.split("@")[0];
+
   const { data, error } = await supabase
     .from("users")
-    .upsert([{ id: uid, email }], { onConflict: "id" });
+    .upsert([{ id: uid, email, user_name: userName }], { onConflict: "id" });
 
   if (error) {
     console.error("Error syncing user with Supabase:", error);

@@ -21,7 +21,6 @@ const NewsFeedComponent: React.FC = () => {
     fetchMore({
       variables: {
         limit,
-        offset: offset + limit,
       },
     });
   };
@@ -44,8 +43,10 @@ const NewsFeedComponent: React.FC = () => {
     }
   }, [data]);
 
-  // scorll event listener 
+  // scorll event listener
   useEffect(() => {
+    setPosts([]);
+    setOffset(0);
     window.addEventListener("scroll", handleScroll);
 
     return () => window.removeEventListener("scroll", handleScroll);

@@ -1,8 +1,24 @@
 import { gql } from "@apollo/client";
 
+export const GET_USERS = gql`
+  query GetUsers {
+    usersCollection {
+      edges {
+        node {
+          user_name
+        }
+      }
+    }
+  }
+`;
+
 export const GET_POSTS = gql`
   query GetPosts($limit: Int, $offset: Int) {
-    postsCollection(first: $limit, offset: $offset) {
+    postsCollection(
+      first: $limit
+      offset: $offset
+      orderBy: { created_at: DescNullsFirst }
+    ) {
       edges {
         node {
           id
@@ -12,6 +28,33 @@ export const GET_POSTS = gql`
           image_url
           tagged_users
         }
+      }
+    }
+  }
+`;
+
+export const CREATE_POST = gql`
+  mutation CreatePost(
+    $userName: String!
+    $description: String!
+    $imageUrl: String
+    $taggedUsers: [String!]
+  ) {
+    insertIntopostsCollection(
+      objects: {
+        user_name: $userName
+        description: $description
+        image_url: $imageUrl
+        tagged_users: $taggedUsers
+      }
+    ) {
+      records {
+        id
+        created_at
+        user_name
+        description
+        image_url
+        tagged_users
       }
     }
   }
