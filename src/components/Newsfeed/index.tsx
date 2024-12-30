@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_POSTS } from "../../graphql/queries";
 import Post, { PostType } from "./post";
+import { useFeed } from "../../contexts/feedContext";
 
 const NewsFeedComponent: React.FC = () => {
   // State to manage pagination
@@ -9,9 +10,11 @@ const NewsFeedComponent: React.FC = () => {
   const [offset, setOffset] = useState(0); // Initial offset
   const [posts, setPosts] = useState<PostType[]>([]); // State to store posts
 
+  const { following } = useFeed();
+
   // Apollo Client query for posts
   const { loading, error, data, fetchMore } = useQuery(GET_POSTS, {
-    variables: { limit, offset },
+    variables: { limit, offset, userNames: following },
     fetchPolicy: "cache-and-network", // To refetch and update the cache
   });
 

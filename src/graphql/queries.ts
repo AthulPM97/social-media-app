@@ -13,11 +13,12 @@ export const GET_USERS = gql`
 `;
 
 export const GET_POSTS = gql`
-  query GetPosts($limit: Int, $offset: Int) {
+  query GetPosts($limit: Int, $offset: Int, $userNames: [String!]) {
     postsCollection(
       first: $limit
       offset: $offset
       orderBy: { created_at: DescNullsFirst }
+      filter: { user_name: { in: $userNames } }
     ) {
       edges {
         node {

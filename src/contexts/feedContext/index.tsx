@@ -44,7 +44,7 @@ export function FeedProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (currentFollowingData) {
       const currentFollowing =
-        currentFollowingData.usersCollection.edges[0].node.following;
+        currentFollowingData?.usersCollection?.edges[0]?.node?.following || [];
       setFollowing(currentFollowing);
     }
   }, [currentFollowingData]);
