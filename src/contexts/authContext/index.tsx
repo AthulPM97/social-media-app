@@ -6,7 +6,7 @@ import firebase from "firebase/compat/app";
 import supabase from "../../supabase/supabaseClient";
 
 interface AuthContextType {
-  currentUser?: any;
+  currentUser?: firebase.User | null;
   userLoggedIn: boolean;
   loading: boolean;
 }

@@ -59,3 +59,30 @@ export const CREATE_POST = gql`
     }
   }
 `;
+
+export const GET_CURRENT_FOLLOWING = gql`
+  query GetCurrentFollowing($currentUserName: String!) {
+    usersCollection(filter: { user_name: { eq: $currentUserName } }) {
+      edges {
+        node {
+          following
+        }
+      }
+    }
+  }
+`;
+
+export const FOLLOW_USER = gql`
+  mutation FollowUser($currentUserName: String!, $updatedFollowing: [String!]) {
+    updateusersCollection(
+      set: { following: $updatedFollowing }
+      filter: { user_name: { eq: $currentUserName } }
+      atMost: 1
+    ) {
+      records {
+        user_name
+        following
+      }
+    }
+  }
+`;

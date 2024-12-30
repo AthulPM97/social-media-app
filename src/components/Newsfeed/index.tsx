@@ -57,7 +57,6 @@ const NewsFeedComponent: React.FC = () => {
 
   return (
     <div>
-      <h1>News Feed</h1>
       <div>
         {posts?.map((post: any) => (
           <Post key={post.id} post={post} />

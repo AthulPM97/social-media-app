@@ -1,3 +1,4 @@
+import client from "../apollo/apolloClient";
 import { auth } from "./firebase";
 import {
   createUserWithEmailAndPassword,
@@ -26,6 +27,7 @@ export const doSignInWithGoogle = async () => {
   // const user = result.user;
 };
 
-export const doSignOut = () => {
+export const doSignOut = async () => {
+  await client.cache.reset();
   return auth.signOut();
 };

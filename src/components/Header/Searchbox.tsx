@@ -4,12 +4,15 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@headlessui/react";
 import { GET_USERS } from "../../graphql/queries";
 import { useQuery } from "@apollo/client";
+import { useFeed } from "../../contexts/feedContext";
 
 const SearchBox: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
 
-  const { loading, error, data } = useQuery(GET_USERS, {
+  const { following, followUser, unfollowUser } = useFeed();
+
+  const { data } = useQuery(GET_USERS, {
     fetchPolicy: "cache-and-network",
   });
 
@@ -21,7 +24,6 @@ const SearchBox: React.FC = () => {
   };
 
   const fetchSuggestions = async (query: string) => {
-    // Simulate fetching suggestions from an API
     const allSuggestions = data.usersCollection.edges.map(
       (edge: any) => edge.node.user_name
     );
@@ -48,18 +50,32 @@ const SearchBox: React.FC = () => {
         />
         {searchTerm && suggestions.length > 0 && (
           <ul className="absolute bg-white border border-gray-200 rounded-lg w-80 mt-2 max-h-48 overflow-y-auto shadow-lg z-10">
-            {suggestions.map((suggestion, index) => (
-              <li
-                key={index}
-                className="p-2 flex justify-between items-center"
-                onClick={() => setSearchTerm(suggestion)}
-              >
-                {suggestion}
-                <Button className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white">
-                  Follow
-                </Button>
-              </li>
-            ))}
+            {suggestions.map((suggestion, index) => {
+              const isFollowing = following.includes(suggestion);
+              return (
+                <li
+                  key={index}
+                  className="p-2 flex justify-between items-center"
+                  onClick={() => setSearchTerm(suggestion)}
+                >
+                  {suggestion}
+                  <Button
+                    className={`inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none ${
+                      isFollowing
+                        ? "data-[hover]:bg-gray-600"
+                        : "data-[hover]:bg-gray-600"
+                    }`}
+                    onClick={() =>
+                      isFollowing
+                        ? unfollowUser(suggestion)
+                        : followUser(suggestion)
+                    }
+                  >
+                    {isFollowing ? "Following" : "Follow"}
+                  </Button>
+                </li>
+              );
+            })}
           </ul>
         )}
       </div>

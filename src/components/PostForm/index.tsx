@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { CREATE_POST } from "../../graphql/queries";
-import { useAuth } from "../../contexts/authContext";
 import { uploadImage } from "../../supabase/uploadImage";
+import { useFeed } from "../../contexts/feedContext";
 
 const PostForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [description, setDescription] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [taggedUsers, setTaggedUsers] = useState<string[]>([]);
 
-  const { currentUser } = useAuth();
-  const userName = currentUser.email.split("@")[0];
+  const { userName } = useFeed();
 
   const [createPost, { loading, error }] = useMutation(CREATE_POST, {
     onCompleted: (data) => {
@@ -29,7 +28,6 @@ const PostForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     let imageUrl: string | null = "";
     if (imageFile) {
       imageUrl = await uploadImage(imageFile);
-      console.log("url ", imageUrl);
     }
     await createPost({
       variables: {

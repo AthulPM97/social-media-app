@@ -6,6 +6,7 @@ import Login from "./components/auth/Login";
 import Home from "./components/Home";
 import Header from "./components/Header";
 import Register from "./components/auth/Register";
+import { FeedProvider } from "./contexts/feedContext";
 
 type Route = {
   path: string;
@@ -34,8 +35,10 @@ function App() {
   return (
     <>
       <AuthProvider>
-        <Header />
-        <div className="w-full h-screen flex flex-col">{routesElement}</div>
+        <FeedProvider>
+          <Header />
+          <div className="w-full h-screen flex flex-col">{routesElement}</div>
+        </FeedProvider>
       </AuthProvider>
     </>
   );
