@@ -30,7 +30,7 @@ function App() {
     },
   ];
 
-  let routesElement = useRoutes(routesArray);
+  const routesElement = useRoutes(routesArray);
 
   return (
     <>
