@@ -40,6 +40,7 @@ const PostForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
     // Close the modal
     onClose();
+    window.location.reload();
   };
 
   return (
