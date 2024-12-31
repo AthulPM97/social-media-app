@@ -5,6 +5,7 @@ import { Button } from "@headlessui/react";
 import { GET_USERS } from "../../graphql/queries";
 import { useQuery } from "@apollo/client";
 import { useFeed } from "../../contexts/feedContext";
+import FollowIcon from "../../assets/FollowIcon";
 
 const SearchBox: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -60,7 +61,7 @@ const SearchBox: React.FC = () => {
                 >
                   {suggestion}
                   <Button
-                    className={`inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none ${
+                    className={`inline-flex items-center gap-2 rounded-md bg-gray-100 py-1.5 px-3 text-sm/6 font-semibold text-black hover:text-white shadow-inner shadow-white/10 focus:outline-none ${
                       isFollowing
                         ? "data-[hover]:bg-gray-600"
                         : "data-[hover]:bg-gray-600"
@@ -71,7 +72,13 @@ const SearchBox: React.FC = () => {
                         : followUser(suggestion)
                     }
                   >
-                    {isFollowing ? "Following" : "Follow"}
+                    {isFollowing ? (
+                      "Following"
+                    ) : (
+                      <>
+                        Follow <FollowIcon />
+                      </>
+                    )}
                   </Button>
                 </li>
               );

@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useAuth } from "../authContext";
 import { useMutation, useQuery } from "@apollo/client";
 import { FOLLOW_USER, GET_CURRENT_FOLLOWING } from "../../graphql/queries";
+import SpinnyThing from "../../assets/SpinnyThing";
 
 interface FeedContextType {
   userName: string | null;
@@ -83,7 +84,7 @@ export function FeedProvider({ children }: { children: React.ReactNode }) {
   };
 
   if (loadingFollowing) {
-    return <div>Loading...</div>;
+    return <SpinnyThing />;
   }
 
   const value = {

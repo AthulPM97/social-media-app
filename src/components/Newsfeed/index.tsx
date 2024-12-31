@@ -3,6 +3,7 @@ import { useQuery } from "@apollo/client";
 import { GET_POSTS } from "../../graphql/queries";
 import Post, { PostType } from "./post";
 import { useFeed } from "../../contexts/feedContext";
+import SpinnyThing from "../../assets/SpinnyThing";
 
 const NewsFeedComponent: React.FC = () => {
   // State to manage pagination
@@ -65,7 +66,7 @@ const NewsFeedComponent: React.FC = () => {
           <Post key={post.id} post={post} />
         ))}
       </div>
-      {loading && <p>Loading...</p>}
+      {loading && <SpinnyThing />}
     </div>
   );
 };

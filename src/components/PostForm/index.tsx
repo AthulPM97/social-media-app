@@ -83,10 +83,10 @@ const PostForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       </div>
       <button
         type="submit"
-        className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700"
+        className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
         disabled={loading}
       >
-        {loading ? "Creating..." : "Create Post"}
+        {loading ? "Posting..." : "Post"}
       </button>
       {error && <p className="mt-2 text-red-500">Error: {error.message}</p>}
     </form>

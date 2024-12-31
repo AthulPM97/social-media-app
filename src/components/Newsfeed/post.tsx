@@ -1,3 +1,5 @@
+import ProfileIcon from "../../assets/ProfileIcon";
+
 export type PostType = {
   user_name: string;
   description: string;
@@ -9,11 +11,13 @@ export type PostType = {
 const Post = ({ post }: { post: PostType }) => {
   const { user_name, description, image_url, tagged_users, created_at } = post;
   return (
-    <div className="border rounded-lg my-3">
+    <div className="border rounded-lg my-3 bg-white">
       {/* Header */}
       <div className="flex items-center p-3">
         <div className="flex items-center w-full">
-          <p className="font-semibold text-sm">{user_name}</p>
+          <ProfileIcon />
+
+          <p className="font-semibold text-sm ml-1">{user_name}</p>
         </div>
       </div>
       {/* Photo */}
@@ -24,7 +28,7 @@ const Post = ({ post }: { post: PostType }) => {
       <div className="m-3">
         {/* Caption */}
         <div className="flex  items-center mt-2">
-          <p className="customfont mr-2 whitespace-nowrap">{user_name}</p>
+          <p className="font-semibold mr-2 whitespace-nowrap">{user_name}</p>
           <p className="truncate">{description}</p>
         </div>
         {/* TimeStamp */}

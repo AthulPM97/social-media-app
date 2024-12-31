@@ -37,7 +37,9 @@ function App() {
       <AuthProvider>
         <FeedProvider>
           <Header />
-          <div className="w-full h-screen flex flex-col">{routesElement}</div>
+          <div className="w-full h-screen flex flex-col bg-gray-100">
+            {routesElement}
+          </div>
         </FeedProvider>
       </AuthProvider>
     </>
